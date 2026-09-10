@@ -1415,3 +1415,9 @@ Goblin classified this as `NATIVE_COMPACTION_COMPATIBILITY=KNOWN_FAILURE` and co
 A completely independent OpenCode session then recovered successfully from the durable chunk return and returned `RE_GROUNDED` without modifying the checkpoint or making unauthorized writes.
 
 Current release status: **FIELD_VERIFIED_RELEASE_PASS**.
+
+---
+
+## If you liked this...
+
+Check out **[Goblin-D.M.T.](https://github.com/es-3581100/Goblin-D.M.T.)** — a model-agnostic OpenCode control runtime for bounded exploration, evidence-driven decisions, lazy skill routing, persistent state, verification, and user-gated execution.
