@@ -1176,7 +1176,7 @@ A release should not be cut merely because the README looks complete.
 - [ ] rollback instructions still work;
 - [ ] model support claims match evidence;
 - [ ] reference-only integrations remain clearly labeled;
-- [ ] license status is explicit.
+- [x] license status is explicit — MIT.
 
 ---
 
@@ -1280,7 +1280,7 @@ renderer                    present
 verification helper         present
 generated OpenCode agent    present
 OPENRNDR integration        reference only / not wired
-license                     not selected
+license                     MIT
 ```
 
 The architecture is prepared for future model families while only claiming tuning for GLM-5.3.
@@ -1289,9 +1289,9 @@ The architecture is prepared for future model families while only claiming tunin
 
 # 30. License
 
-A license has **not** been selected in this release.
+Goblin-Logic-Manager is released under the **MIT License**.
 
-Choose and add the intended open-source license before public redistribution if you want downstream reuse rights to be explicit.
+See [`LICENSE`](LICENSE) for the full license text.
 
 ---
 
