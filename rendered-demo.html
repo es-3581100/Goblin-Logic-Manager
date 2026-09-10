@@ -1,0 +1,1415 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Goblin-Logic-Manager — model-expandable OpenCode development-agent system with a narrow, auditable trust boundary.">
+<title>Goblin-Logic-Manager — Rendered README Demo</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #0e0e12;
+  --surface: #15151c;
+  --surface-2: #1b1b24;
+  --surface-3: #22222d;
+  --text: #f4f2f8;
+  --muted: #aaa6b7;
+  --dim: #777382;
+  --line: #34323f;
+  --line-hot: #5b526d;
+  --k-purple: #7f52ff;
+  --k-magenta: #c83dba;
+  --k-orange: #ff8a3d;
+  --k-blue: #4c8dff;
+  --ok: #74d69c;
+  --warn: #e9bd70;
+  --danger: #f07d82;
+  --code: #111117;
+  --shadow: 0 22px 80px rgba(0,0,0,.28);
+  --radius: 14px;
+  --content: 880px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 78px; }
+body {
+  margin: 0;
+  color: var(--text);
+  background:
+    linear-gradient(120deg, rgba(127,82,255,.07), transparent 27%),
+    radial-gradient(circle at 85% 8%, rgba(255,138,61,.06), transparent 22%),
+    var(--bg);
+  font: 15.5px/1.72 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+body::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .12;
+  background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 28px 28px; mask-image: linear-gradient(to bottom, black, transparent 70%);
+}
+a { color: #b9a5ff; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: #e4d9ff; }
+.hero-banner {
+  width: 100%;
+  display: block;
+  margin: 18px 0 28px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 18px 55px rgba(0,0,0,.30);
+  object-fit: cover;
+}
+.image-credit {
+  margin-top: 34px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  color: var(--dim);
+  font-size: 12px;
+  text-align: right;
+}
+
+.topbar {
+  position: sticky; top: 0; z-index: 30; height: 60px; display: flex; align-items: center; gap: 16px;
+  padding: 0 22px; background: rgba(14,14,18,.84); backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(127,82,255,.18);
+}
+.brand { display:flex; align-items:center; gap:11px; min-width:0; font-weight:750; letter-spacing:-.02em; }
+.logo {
+  width: 30px; height: 30px; border-radius: 7px; flex:0 0 auto;
+  background: linear-gradient(135deg, var(--k-orange) 0 26%, var(--k-magenta) 26% 53%, var(--k-purple) 53% 76%, var(--k-blue) 76%);
+  transform: rotate(-2deg); box-shadow: 0 5px 20px rgba(127,82,255,.22);
+}
+.brand small { color: var(--muted); font-weight: 550; }
+.top-meta { margin-left:auto; display:flex; gap:9px; align-items:center; color:var(--muted); font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; }
+.badge { padding:5px 8px; border:1px solid var(--line); border-radius:7px; background:rgba(255,255,255,.025); }
+.layout { display:grid; grid-template-columns: 275px minmax(0, var(--content)) 1fr; gap: 42px; max-width: 1490px; margin:0 auto; padding: 34px 28px 90px; }
+.sidebar { position:sticky; top:82px; height:calc(100vh - 100px); overflow:auto; padding: 4px 16px 30px 0; scrollbar-width: thin; }
+.sidebar .eyebrow { margin: 0 0 12px 10px; color: var(--dim); font: 700 10px/1.2 ui-monospace, monospace; letter-spacing:.16em; text-transform:uppercase; }
+.toc { display:flex; flex-direction:column; gap:1px; }
+.toc a { display:block; padding:6px 9px; border-radius:7px; color:#aaa6b7; text-decoration:none; font-size:12.7px; line-height:1.25; }
+.toc a:hover { color:#fff; background:rgba(127,82,255,.09); }
+.toc .toc-l1 { color:#dad6e4; font-weight:700; margin-top:7px; }
+.toc .toc-l2 { padding-left:17px; }
+.toc .toc-l3 { padding-left:27px; color:#8f8b99; font-size:12px; }
+main { min-width:0; }
+.doc { background:linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,.008)); border:1px solid #24232c; border-radius:18px; padding: 54px 60px 72px; box-shadow:var(--shadow); }
+.doc > h1:first-child {
+  font-size: clamp(38px, 5vw, 58px); line-height:1.02; letter-spacing:-.055em; margin:0 0 18px;
+  background:linear-gradient(100deg, #fff 0 45%, #d9c9ff 68%, #ffb177 100%); -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+h1,h2,h3 { font-weight:800; letter-spacing:-.025em; position:relative; }
+h1 { font-size:31px; margin:58px 0 18px; }
+h2 { font-size:24px; margin:52px 0 14px; padding-top:8px; }
+h2::before { content:""; position:absolute; left:-22px; top:22px; width:7px; height:7px; border-radius:50%; background:var(--k-purple); box-shadow:0 0 0 4px rgba(127,82,255,.11); }
+h3 { font-size:18px; margin:36px 0 11px; color:#eeeaf4; }
+p { margin: 12px 0 18px; color:#d0ccd7; }
+strong { color:#fff; }
+hr { border:0; height:1px; background:linear-gradient(90deg, transparent, var(--line) 12%, var(--line) 88%, transparent); margin:40px 0; }
+blockquote { margin:22px 0; padding:13px 17px; border-left:3px solid var(--k-purple); background:rgba(127,82,255,.055); border-radius:0 9px 9px 0; }
+blockquote p { margin:0; color:#ded9e8; }
+.lead-quote {
+  margin:0 0 24px; padding:18px 20px; border:1px solid rgba(127,82,255,.29); border-left:4px solid var(--k-purple); border-radius:12px;
+  background:linear-gradient(120deg, rgba(127,82,255,.105), rgba(255,138,61,.035)); font-size:17px;
+}
+ul,ol { padding-left:25px; margin:10px 0 22px; color:#cbc7d2; }
+li { margin:5px 0; }
+li::marker { color:#8d7bc6; }
+code {
+  font: 0.91em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; padding:.14em .38em; border:1px solid #35313f;
+  background:#1a1820; border-radius:5px; color:#e6dfff;
+}
+pre { position:relative; overflow:auto; margin:19px 0 27px; padding: 39px 18px 18px; border-radius:12px; background:var(--code); border:1px solid #2e2b37; box-shadow: inset 0 1px rgba(255,255,255,.018); }
+pre::before { content:attr(data-lang); position:absolute; top:10px; left:15px; color:#777281; font: 700 10px ui-monospace, monospace; letter-spacing:.11em; text-transform:uppercase; }
+pre::after { content:"●  ●  ●"; position:absolute; top:9px; right:14px; color:#524d5b; font-size:10px; letter-spacing:2px; }
+pre code { padding:0; border:0; background:transparent; color:#d9d3e1; font-size:12.5px; line-height:1.62; }
+pre[data-lang="kotlin"] { border-color:rgba(127,82,255,.42); background:linear-gradient(135deg, #121119, #15121b); }
+pre[data-lang="bash"] { border-color:rgba(116,214,156,.26); }
+pre[data-lang="yaml"], pre[data-lang="json"] { border-color:rgba(255,138,61,.28); }
+table { width:100%; border-collapse:separate; border-spacing:0; margin:20px 0 30px; overflow:hidden; border:1px solid var(--line); border-radius:11px; font-size:13.5px; }
+th { text-align:left; color:#f6f3f8; background:#1d1c25; font-weight:730; }
+th,td { padding:10px 12px; border-bottom:1px solid #2d2b35; vertical-align:top; }
+tr:last-child td { border-bottom:0; }
+td { color:#c4bfcb; background:rgba(255,255,255,.009); }
+tr:hover td { background:rgba(127,82,255,.035); }
+.right-rail { position:sticky; top:84px; align-self:start; max-width:250px; }
+.rail-card { border:1px solid var(--line); border-radius:12px; padding:15px; background:rgba(21,21,28,.72); margin-bottom:12px; }
+.rail-card h4 { margin:0 0 9px; font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:#8e889b; }
+.kv { display:grid; grid-template-columns:82px 1fr; gap:6px; font:11.5px ui-monospace, monospace; }
+.kv span:nth-child(odd) { color:#777281; }
+.kv span:nth-child(even) { color:#d5d0dc; }
+.rule { margin-top:13px; padding-top:12px; border-top:1px solid var(--line); color:#c9c3d0; font-size:12px; }
+.rule strong { color:#ffbd8f; }
+.footer-note { margin-top:45px; padding-top:20px; border-top:1px solid var(--line); color:#827d8c; font-size:12px; }
+.copy { position:absolute; z-index:2; top:8px; right:62px; border:0; border-radius:6px; background:#25222d; color:#928c9d; padding:3px 7px; font:10px ui-monospace,monospace; cursor:pointer; }
+.copy:hover { color:white; background:#312d3a; }
+.mermaid-live { padding:18px; background:#101017; border:1px solid rgba(127,82,255,.35); border-radius:12px; margin:20px 0 28px; overflow:auto; }
+@media(max-width:1150px) { .layout { grid-template-columns:220px minmax(0,1fr); } .right-rail { display:none; } .doc { padding:46px 42px 60px; } }
+@media(max-width:800px) { .layout { display:block; padding:18px 12px 50px; } .sidebar { display:none; } .doc { padding:34px 22px 48px; border-radius:12px; } .top-meta .badge:nth-child(n+2) {display:none} h2::before {display:none} table {display:block;overflow:auto} }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="logo" aria-hidden="true"></span><span>Goblin-Logic-Manager <small>/ README render</small></span></div>
+  <div class="top-meta"><span class="badge">KOTLIN-SIDE REFERENCE</span><span class="badge">v0.1.0</span><span class="badge">READ-ONLY DEMO</span></div>
+</header>
+<div class="layout">
+  <aside class="sidebar" aria-label="README navigation">
+    <div class="eyebrow">Document map</div>
+    <nav class="toc"><a class="toc-l2" href="#0-read-this-first">0. Read this first</a>
+<a class="toc-l3" href="#project-promise">Project promise</a>
+<a class="toc-l1" href="#1-focus">1. Focus</a>
+<a class="toc-l1" href="#2-non-goals">2. Non-goals</a>
+<a class="toc-l1" href="#3-design-contract">3. Design contract</a>
+<a class="toc-l3" href="#invariant-set">Invariant set</a>
+<a class="toc-l1" href="#4-repository-map">4. Repository map</a>
+<a class="toc-l3" href="#authority-map">Authority map</a>
+<a class="toc-l1" href="#5-the-render-pipeline">5. The render pipeline</a>
+<a class="toc-l3" href="#desired-properties">Desired properties</a>
+<a class="toc-l3" href="#conceptual-kotlin-model">Conceptual Kotlin model</a>
+<a class="toc-l1" href="#6-why-glm-5-3-first">6. Why GLM-5.3 first?</a>
+<a class="toc-l3" href="#model-status">Model status</a>
+<a class="toc-l1" href="#7-quick-start">7. Quick start</a>
+<a class="toc-l3" href="#minimal-success-condition">Minimal success condition</a>
+<a class="toc-l1" href="#8-recommended-opencode-setup-symlink-do-not-merge">8. Recommended OpenCode setup: symlink, do not merge</a>
+<a class="toc-l2" href="#example-layout">Example layout</a>
+<a class="toc-l2" href="#create-the-repository-link">Create the repository link</a>
+<a class="toc-l2" href="#expose-only-the-generated-agent">Expose only the generated agent</a>
+<a class="toc-l3" href="#do-not-blindly-overwrite">Do not blindly overwrite</a>
+<a class="toc-l1" href="#9-why-the-symlink-setup-is-safer-for-newer-users">9. Why the symlink setup is safer for newer users</a>
+<a class="toc-l3" href="#important-limitation">Important limitation</a>
+<a class="toc-l1" href="#10-removal-rollback">10. Removal / rollback</a>
+<a class="toc-l1" href="#11-installation-contract-for-coding-agents">11. Installation contract for coding agents</a>
+<a class="toc-l3" href="#agent-result-shape">Agent result shape</a>
+<a class="toc-l1" href="#12-the-expansion-gate">12. The expansion gate</a>
+<a class="toc-l2" href="#core-rule">Core rule</a>
+<a class="toc-l3" href="#gate-states">Gate states</a>
+<a class="toc-l3" href="#kotlin-style-gate-model">Kotlin-style gate model</a>
+<a class="toc-l1" href="#13-ui-philosophy">13. UI philosophy</a>
+<a class="toc-l1" href="#14-openrndr-kotlin-visual-reference-node">14. OPENRNDR / Kotlin visual-reference node</a>
+<a class="toc-l3" href="#reference-interpretation">Reference interpretation</a>
+<a class="toc-l3" href="#candidate-decision-tree">Candidate decision tree</a>
+<a class="toc-l1" href="#15-prompt-node-rendering-contract">15. Prompt-node rendering contract</a>
+<a class="toc-l3" href="#suggested-kotlin-data-model">Suggested Kotlin data model</a>
+<a class="toc-l3" href="#markdown-renderer">Markdown renderer</a>
+<a class="toc-l3" href="#renderer-invariants">Renderer invariants</a>
+<a class="toc-l3" href="#duplicate-node-rule">Duplicate-node rule</a>
+<a class="toc-l1" href="#16-verification-philosophy">16. Verification philosophy</a>
+<a class="toc-l3" href="#example">Example</a>
+<a class="toc-l1" href="#17-evidence-first-completion-format">17. Evidence-first completion format</a>
+<a class="toc-l3" href="#unsupported-completion-language-to-avoid">Unsupported completion language to avoid</a>
+<a class="toc-l1" href="#18-model-adapter-lifecycle">18. Model adapter lifecycle</a>
+<a class="toc-l3" href="#adding-another-model">Adding another model</a>
+<a class="toc-l1" href="#19-suggested-model-registry-semantics">19. Suggested model-registry semantics</a>
+<a class="toc-l1" href="#20-source-precedence">20. Source precedence</a>
+<a class="toc-l1" href="#21-ui-expansion-checklist">21. UI expansion checklist</a>
+<a class="toc-l1" href="#22-update-workflow">22. Update workflow</a>
+<a class="toc-l1" href="#23-troubleshooting">23. Troubleshooting</a>
+<a class="toc-l2" href="#the-symlink-already-exists">&quot;The symlink already exists&quot;</a>
+<a class="toc-l2" href="#the-generated-agent-link-is-broken">&quot;The generated agent link is broken&quot;</a>
+<a class="toc-l2" href="#i-edited-the-generated-agent-directly">&quot;I edited the generated agent directly&quot;</a>
+<a class="toc-l2" href="#a-new-model-seems-to-work-with-the-glm-prompt">&quot;A new model seems to work with the GLM prompt&quot;</a>
+<a class="toc-l1" href="#24-repository-hygiene">24. Repository hygiene</a>
+<a class="toc-l1" href="#25-release-gate">25. Release gate</a>
+<a class="toc-l3" href="#minimum-release-checklist">Minimum release checklist</a>
+<a class="toc-l1" href="#26-security-and-trust-notes">26. Security and trust notes</a>
+<a class="toc-l3" href="#rule-of-thumb">Rule of thumb</a>
+<a class="toc-l1" href="#27-for-repository-reviewers">27. For repository reviewers</a>
+<a class="toc-l1" href="#28-for-coding-agents-entering-this-repository">28. For coding agents entering this repository</a>
+<a class="toc-l1" href="#29-project-status">29. Project status</a>
+<a class="toc-l1" href="#30-license">30. License</a>
+<a class="toc-l1" href="#31-reference-index">31. Reference index</a>
+<a class="toc-l2" href="#goblin-internal">Goblin internal</a>
+<a class="toc-l2" href="#openrndr-candidate-references">OPENRNDR candidate references</a>
+<a class="toc-l2" href="#closing-rule">Closing rule</a></nav>
+  </aside>
+  <main>
+    <article class="doc"><h1 id="goblin-logic-manager">Goblin-Logic-Manager</h1>
+<img class="hero-banner" src="goblin-logic-manager-banner.png" alt="Goblin-Logic-Manager illustrated banner">
+<blockquote class="lead-quote">
+<p><strong>A small, model-expandable OpenCode development-agent system with a deliberately narrow trust boundary.</strong></p>
+</blockquote>
+<p><code>Goblin-Logic-Manager</code> (GLM) separates <strong>stable development behavior</strong> from <strong>model-specific prompt tuning</strong>, renders the two into an OpenCode agent, and keeps installation auditable by reference instead of merging an unfamiliar automation stack into a user's existing configuration.</p>
+<pre data-lang="text"><code class="language-text">status          v0.1.0 — GLM pioneer release
+pioneer model   GLM-5.3
+architecture    model-neutral core + thin model overlay
+install style   symlink/reference-first
+authority       prompt guidance only; no implied execution authority
+expansion gate  NO EXPANSION WITHOUT VALIDATION
+</code></pre>
+<blockquote>
+<p><strong>Build small. Inspect first. Validate before expanding. Report only what the evidence supports.</strong></p>
+</blockquote>
+<hr/>
+<h2 id="0-read-this-first">0. Read this first</h2>
+<p>Goblin is intentionally <strong>not</strong> a giant agent framework.</p>
+<p>It is a compact development-control surface built around four ideas:</p>
+<ol>
+<li><strong>Stable rules belong in a model-neutral core.</strong></li>
+<li><strong>Model quirks belong in thin, replaceable overlays.</strong></li>
+<li><strong>Generated agent files should be reproducible from source.</strong></li>
+<li><strong>Installing an agent should not silently reorganize the user's OpenCode configuration.</strong></li>
+</ol>
+<p>The first tuned profile is <strong>GLM-5.3</strong>, but the design is explicitly prepared for other model families without cloning the whole development philosophy.</p>
+<h3 id="project-promise">Project promise</h3>
+<p>Goblin should make it easy to answer:</p>
+<pre data-lang="text"><code class="language-text">What rules are stable?
+What behavior is model-specific?
+What file did the model actually receive?
+What changed since the last render?
+What did installation expose to OpenCode?
+What evidence supports a PASS?
+</code></pre>
+<p>If the repository cannot answer those questions clearly, the design has drifted.</p>
+<hr/>
+<h1 id="1-focus">1. Focus</h1>
+<p>Goblin-Logic-Manager is tuned for practical application work:</p>
+<ul>
+<li>small apps and developer utilities</li>
+<li>Android / Kotlin</li>
+<li>browser apps and Chrome extensions</li>
+<li>Linux desktop tooling</li>
+<li>Xubuntu / XFCE-friendly workflows</li>
+<li>local-first utilities</li>
+<li>practical UI implementation</li>
+<li>reproducible builds</li>
+<li>focused verification</li>
+<li>evidence-backed completion reporting</li>
+</ul>
+<p>It is especially intended for work where a model should behave like a disciplined developer rather than a demo generator.</p>
+<hr/>
+<h1 id="2-non-goals">2. Non-goals</h1>
+<p>Goblin is <strong>not</strong> trying to become:</p>
+<ul>
+<li>a universal autonomous coding platform</li>
+<li>a hidden orchestration layer</li>
+<li>a replacement for OpenCode</li>
+<li>a package manager</li>
+<li>a shell installer with broad machine authority</li>
+<li>a generic "AI dashboard"</li>
+<li>a fake multi-agent organization chart</li>
+<li>a model benchmark masquerading as a development system</li>
+<li>a place to bury model-specific workarounds inside supposedly universal rules</li>
+</ul>
+<p>The project favors a small number of explicit surfaces over clever implicit behavior.</p>
+<hr/>
+<h1 id="3-design-contract">3. Design contract</h1>
+<p>The architecture can be summarized as:</p>
+<pre data-lang="text"><code class="language-text">stable development rules
+          +
+small model-specific overlay
+          |
+          v
+deterministically rendered agent
+          |
+          v
+explicit OpenCode integration point
+</code></pre>
+<p>A model adapter is a <strong>prompt overlay, not a replacement architecture</strong>.</p>
+<h3 id="invariant-set">Invariant set</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Invariant</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>G1</code></td>
+<td>Core is model-neutral</td>
+<td>Generic development rules do not depend on GLM-specific quirks.</td>
+</tr>
+<tr>
+<td><code>G2</code></td>
+<td>Overlays are thin</td>
+<td>A model file changes only behavior demonstrated to be model-sensitive.</td>
+</tr>
+<tr>
+<td><code>G3</code></td>
+<td>Render is reproducible</td>
+<td>The generated OpenCode agent is derived from inspectable source files.</td>
+</tr>
+<tr>
+<td><code>G4</code></td>
+<td>Install is narrow</td>
+<td>Setup exposes explicit links instead of copying a framework into live config.</td>
+</tr>
+<tr>
+<td><code>G5</code></td>
+<td>Evidence outranks confidence</td>
+<td>Completion claims follow verification, not model narration.</td>
+</tr>
+<tr>
+<td><code>G6</code></td>
+<td>Expansion is gated</td>
+<td>New architecture is not added merely because it is aesthetically attractive.</td>
+</tr>
+<tr>
+<td><code>G7</code></td>
+<td>Existing project intent wins</td>
+<td>Local project sources outrank Goblin's generic UI or implementation preferences.</td>
+</tr>
+<tr>
+<td><code>G8</code></td>
+<td>Generated output is not hand-edited authority</td>
+<td>Source rules and overlays remain the maintainable inputs.</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h1 id="4-repository-map">4. Repository map</h1>
+<pre data-lang="text"><code class="language-text">Goblin-Logic-Manager/
+├── AGENTS.md                         # repo-wide development rules
+├── README.md                         # human + agent orientation
+├── model-registry.json               # model-family registry
+├── core/
+│   └── developer-core.md             # stable, model-neutral behavior
+├── models/
+│   ├── README.md
+│   └── glm-5.3.md                    # pioneer tuning overlay
+├── scripts/
+│   ├── render_agent.py               # builds an OpenCode agent
+│   └── verify.py                     # repo consistency checks
+├── .opencode/
+│   └── agents/
+│       └── goblin-logic-manager.md   # generated GLM-5.3 agent
+├── docs/
+│   ├── ADDING-A-MODEL.md
+│   ├── DESIGN.md
+│   └── RELEASE-NOTES-v0.1.0.md
+├── CHANGELOG.md
+├── VERSION
+└── Makefile
+</code></pre>
+<h3 id="authority-map">Authority map</h3>
+<pre data-lang="text"><code class="language-text">┌──────────────────────────────┐
+│ core/developer-core.md       │
+│ stable development behavior │
+└──────────────┬───────────────┘
+               │
+               │ compose
+               │
+┌──────────────▼───────────────┐
+│ models/&lt;family&gt;.md           │
+│ model-sensitive overlay      │
+└──────────────┬───────────────┘
+               │
+               │ render
+               │
+┌──────────────▼───────────────┐
+│ .opencode/agents/*.md        │
+│ generated runtime prompt     │
+└──────────────┬───────────────┘
+               │
+               │ explicit link
+               │
+┌──────────────▼───────────────┐
+│ ~/.config/opencode/agents/   │
+│ active OpenCode exposure     │
+└──────────────────────────────┘
+</code></pre>
+<p>The generated file is an output surface. The core and overlay remain the maintainable source surfaces.</p>
+<hr/>
+<h1 id="5-the-render-pipeline">5. The render pipeline</h1>
+<p>Goblin's core mechanism should remain boring enough to audit.</p>
+<pre class="mermaid-fallback" data-lang="mermaid"><code class="language-mermaid">flowchart LR
+    A[developer-core.md] --&gt; C[render_agent.py]
+    B[models/glm-5.3.md] --&gt; C
+    D[model-registry.json] --&gt; C
+    C --&gt; E[generated agent markdown]
+    E --&gt; F[verify.py]
+    F --&gt;|PASS| G[OpenCode agent link]
+    F --&gt;|FAIL| H[repair source or renderer]
+</code></pre>
+<h3 id="desired-properties">Desired properties</h3>
+<p>The render path should be:</p>
+<ul>
+<li>deterministic for the same inputs;</li>
+<li>inspectable before activation;</li>
+<li>model-registry aware;</li>
+<li>free of hidden network dependence;</li>
+<li>free of silent edits to the user's global OpenCode configuration;</li>
+<li>verifiable without needing the model to explain what it thinks happened.</li>
+</ul>
+<h3 id="conceptual-kotlin-model">Conceptual Kotlin model</h3>
+<p>Goblin is currently rendered by the repository's existing tooling. The Kotlin below is a <strong>design model</strong>, not a claim that the current renderer is implemented in Kotlin.</p>
+<pre data-lang="kotlin"><code class="language-kotlin">data class DeveloperCore(
+    val markdown: String,
+)
+
+data class ModelOverlay(
+    val family: String,
+    val markdown: String,
+    val status: ModelStatus,
+)
+
+enum class ModelStatus {
+    PIONEER_READY,
+    RESERVED,
+    EXPERIMENTAL,
+    DISABLED,
+}
+
+data class RenderedAgent(
+    val family: String,
+    val markdown: String,
+    val sourceInputs: List&lt;String&gt;,
+)
+
+fun renderAgent(
+    core: DeveloperCore,
+    overlay: ModelOverlay,
+): RenderedAgent {
+    require(overlay.status != ModelStatus.DISABLED)
+
+    return RenderedAgent(
+        family = overlay.family,
+        markdown = buildString {
+            appendLine(core.markdown.trim())
+            appendLine()
+            appendLine("---")
+            appendLine()
+            appendLine(overlay.markdown.trim())
+        },
+        sourceInputs = listOf(
+            "core/developer-core.md",
+            "models/${overlay.family}.md",
+        ),
+    )
+}
+</code></pre>
+<p>The important part is not Kotlin itself. The important part is that the data flow is obvious.</p>
+<hr/>
+<h1 id="6-why-glm-5-3-first">6. Why GLM-5.3 first?</h1>
+<p>GLM-5.3 is the pioneer profile because it is the model this repository is actively being shaped around.</p>
+<p>The overlay deliberately favors:</p>
+<ul>
+<li>Markdown-first instructions</li>
+<li>direct imperative language</li>
+<li>short execution loops</li>
+<li>minimal prompt ceremony</li>
+<li>natural tool use</li>
+<li>evidence-driven completion</li>
+<li>no fake tool syntax</li>
+<li>no rigid delegation theater</li>
+</ul>
+<p>The <strong>core rules are not GLM-specific</strong>.</p>
+<p>Future Qwen, DeepSeek, Kimi, and other model families can add their own overlays without forking the underlying development philosophy.</p>
+<h3 id="model-status">Model status</h3>
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Status</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GLM-5.3</td>
+<td><strong>pioneer-ready</strong></td>
+<td>First active and tuned profile</td>
+</tr>
+<tr>
+<td>Qwen</td>
+<td>reserved</td>
+<td>Future evidence-backed adapter</td>
+</tr>
+<tr>
+<td>DeepSeek</td>
+<td>reserved</td>
+<td>Future evidence-backed adapter</td>
+</tr>
+<tr>
+<td>Kimi</td>
+<td>reserved</td>
+<td>Future evidence-backed adapter</td>
+</tr>
+</tbody>
+</table>
+<p><code>reserved</code> means the architecture has a slot for that family.</p>
+<p>It does <strong>not</strong> mean that family has been tuned, verified, benchmarked, or promoted.</p>
+<hr/>
+<h1 id="7-quick-start">7. Quick start</h1>
+<p>Render the default profile:</p>
+<pre data-lang="bash"><code class="language-bash">python3 scripts/render_agent.py
+</code></pre>
+<p>Verify the repository:</p>
+<pre data-lang="bash"><code class="language-bash">python3 scripts/verify.py
+</code></pre>
+<p>Or use the Makefile:</p>
+<pre data-lang="bash"><code class="language-bash">make render
+make verify
+</code></pre>
+<p>Expected generated agent:</p>
+<pre data-lang="text"><code class="language-text">.opencode/agents/goblin-logic-manager.md
+</code></pre>
+<h3 id="minimal-success-condition">Minimal success condition</h3>
+<p>A normal local change should be able to answer:</p>
+<pre data-lang="text"><code class="language-text">render: PASS
+verify: PASS
+generated agent: present
+unexpected config edits: none
+</code></pre>
+<hr/>
+<h1 id="8-recommended-opencode-setup-symlink-do-not-merge">8. Recommended OpenCode setup: symlink, do not merge</h1>
+<p>For a persistent local installation, keep Goblin-Logic-Manager in its <strong>own Git repository</strong> and expose only the intended surfaces to OpenCode with small, explicit symlinks.</p>
+<p>This is preferable to copying an unfamiliar agent framework directly into:</p>
+<pre data-lang="text"><code class="language-text">~/.config/opencode/
+</code></pre>
+<p>because that directory may already contain configuration you trust.</p>
+<h2 id="example-layout">Example layout</h2>
+<pre data-lang="text"><code class="language-text">~/repos/Build Dev/build-dev-goblin-logic-manager/Goblin-Logic-Manager/
+    ├── core/
+    ├── models/
+    ├── scripts/
+    ├── docs/
+    └── .opencode/agents/goblin-logic-manager.md
+
+~/.config/opencode/
+    ├── goblin-logic-manager -&gt; &lt;repo&gt;/Goblin-Logic-Manager/
+    └── agents/
+        └── goblin-logic-manager.md -&gt; &lt;repo&gt;/.opencode/agents/goblin-logic-manager.md
+</code></pre>
+<h2 id="create-the-repository-link">Create the repository link</h2>
+<p>Adjust the source path if the repository lives elsewhere.</p>
+<pre data-lang="bash"><code class="language-bash">ln -s \
+  "/home/sticky-ricky/repos/Build Dev/build-dev-goblin-logic-manager/Goblin-Logic-Manager" \
+  "$HOME/.config/opencode/goblin-logic-manager"
+</code></pre>
+<p>Verify it:</p>
+<pre data-lang="bash"><code class="language-bash">ls -ld "$HOME/.config/opencode/goblin-logic-manager"
+readlink -f "$HOME/.config/opencode/goblin-logic-manager"
+</code></pre>
+<h2 id="expose-only-the-generated-agent">Expose only the generated agent</h2>
+<pre data-lang="bash"><code class="language-bash">mkdir -p "$HOME/.config/opencode/agents"
+
+ln -s \
+  "/home/sticky-ricky/repos/Build Dev/build-dev-goblin-logic-manager/Goblin-Logic-Manager/.opencode/agents/goblin-logic-manager.md" \
+  "$HOME/.config/opencode/agents/goblin-logic-manager.md"
+</code></pre>
+<p>Verify the exact target:</p>
+<pre data-lang="bash"><code class="language-bash">ls -l "$HOME/.config/opencode/agents/goblin-logic-manager.md"
+readlink -f "$HOME/.config/opencode/agents/goblin-logic-manager.md"
+
+test -f "$HOME/.config/opencode/agents/goblin-logic-manager.md" \
+  &amp;&amp; echo "PASS: Goblin agent linked and readable" \
+  || echo "FAIL: Goblin agent is not readable"
+</code></pre>
+<h3 id="do-not-blindly-overwrite">Do not blindly overwrite</h3>
+<p>If either destination already exists, inspect it first.</p>
+<pre data-lang="bash"><code class="language-bash">ls -ld \
+  "$HOME/.config/opencode/goblin-logic-manager" \
+  "$HOME/.config/opencode/agents/goblin-logic-manager.md" \
+  2&gt;/dev/null
+</code></pre>
+<p>Do <strong>not</strong> make <code>ln -sf</code> the default installation strategy.</p>
+<hr/>
+<h1 id="9-why-the-symlink-setup-is-safer-for-newer-users">9. Why the symlink setup is safer for newer users</h1>
+<p>A random GitHub agent repository may contain much more than a prompt file:</p>
+<ul>
+<li>installers</li>
+<li>shell scripts</li>
+<li>package scripts</li>
+<li>plugins</li>
+<li>hooks</li>
+<li>MCP configuration</li>
+<li>commands</li>
+<li>policies</li>
+<li>executable helpers</li>
+<li>config migrations</li>
+<li>code that rewrites existing settings</li>
+</ul>
+<p>Copying or running a project directly inside <code>~/.config/opencode/</code> can blur the boundary between:</p>
+<pre data-lang="text"><code class="language-text">code I am evaluating
+</code></pre>
+<p>and:</p>
+<pre data-lang="text"><code class="language-text">configuration I already trust
+</code></pre>
+<p>The symlink approach is deliberately boring.</p>
+<p>It means:</p>
+<ul>
+<li>the downloaded project stays in its own Git repository;</li>
+<li>Git can show what changed during updates;</li>
+<li>the project is easy to pin to a commit;</li>
+<li>the project is easy to diff before use;</li>
+<li>your existing <code>opencode.jsonc</code> is not replaced merely to install Goblin;</li>
+<li>your existing <code>AGENTS.md</code> is not replaced;</li>
+<li>your plugins, commands, policies, and hooks remain separate;</li>
+<li>the active OpenCode exposure is explicit;</li>
+<li>rollback means removing links instead of untangling copied files.</li>
+</ul>
+<h3 id="important-limitation">Important limitation</h3>
+<p>This is a <strong>trust-boundary improvement, not a security sandbox</strong>.</p>
+<p>A malicious or compromised repository can still be dangerous if you:</p>
+<ul>
+<li>execute its scripts;</li>
+<li>install its packages;</li>
+<li>run its hooks;</li>
+<li>start its MCP servers;</li>
+<li>grant its agent broad tools;</li>
+<li>grant elevated permissions;</li>
+<li>accept config rewrites you have not reviewed.</li>
+</ul>
+<p>Inspect source and diffs before execution.</p>
+<hr/>
+<h1 id="10-removal-rollback">10. Removal / rollback</h1>
+<p>Removing the integration links does not delete the source repository.</p>
+<pre data-lang="bash"><code class="language-bash">rm "$HOME/.config/opencode/agents/goblin-logic-manager.md"
+rm "$HOME/.config/opencode/goblin-logic-manager"
+</code></pre>
+<p><code>rm</code> removes the symlinks, <strong>not</strong> the linked Goblin repository.</p>
+<p>Verify rollback:</p>
+<pre data-lang="bash"><code class="language-bash">test ! -e "$HOME/.config/opencode/agents/goblin-logic-manager.md" \
+  &amp;&amp; echo "PASS: agent link removed"
+
+test ! -e "$HOME/.config/opencode/goblin-logic-manager" \
+  &amp;&amp; echo "PASS: repo link removed"
+</code></pre>
+<hr/>
+<h1 id="11-installation-contract-for-coding-agents">11. Installation contract for coding agents</h1>
+<p>If an AI coding agent performs setup, give it a narrow contract instead of open-ended authority.</p>
+<pre data-lang="text"><code class="language-text">Install Goblin-Logic-Manager by reference, not by merging it into my OpenCode config.
+
+1. Keep the Goblin repository in its own Git working tree.
+2. Inspect ~/.config/opencode before changing anything.
+3. Create only these integration points unless I explicitly approve more:
+   - ~/.config/opencode/goblin-logic-manager -&gt; Goblin repo root
+   - ~/.config/opencode/agents/goblin-logic-manager.md -&gt; generated Goblin agent
+4. If either destination already exists, stop and report it; do not overwrite it.
+5. Do not modify opencode.jsonc, AGENTS.md, plugins, commands, policies, hooks,
+   package files, MCP configuration, or unrelated symlinks as part of setup.
+6. Verify both links with readlink -f.
+7. Verify the generated agent target is a readable regular file.
+8. Report the exact resolved paths.
+9. Report any deviation from this contract.
+10. Do not claim installation PASS if any verification step was skipped.
+</code></pre>
+<h3 id="agent-result-shape">Agent result shape</h3>
+<p>A setup agent should return something close to:</p>
+<pre data-lang="text"><code class="language-text">status: PASS | HOLD | FAIL
+repo_link:
+  requested: ~/.config/opencode/goblin-logic-manager
+  resolved:  &lt;absolute path&gt;
+agent_link:
+  requested: ~/.config/opencode/agents/goblin-logic-manager.md
+  resolved:  &lt;absolute path&gt;
+existing_files_overwritten: false
+unrequested_config_changes: false
+verification:
+  repo_link_resolves: true
+  agent_link_resolves: true
+  agent_target_readable: true
+deviations: []
+</code></pre>
+<p>This is intentionally stricter than "it seems installed."</p>
+<hr/>
+<h1 id="12-the-expansion-gate">12. The expansion gate</h1>
+<h2 id="core-rule">Core rule</h2>
+<blockquote>
+<p><strong>NO EXPANSION WITHOUT VALIDATION.</strong></p>
+</blockquote>
+<p>Before adding:</p>
+<ul>
+<li>pages</li>
+<li>frameworks</li>
+<li>dependencies</li>
+<li>component families</li>
+<li>services</li>
+<li>navigation systems</li>
+<li>state layers</li>
+<li>background workers</li>
+<li>abstraction layers</li>
+<li>design systems</li>
+<li>decorative subsystems</li>
+<li>agent orchestration</li>
+<li>new model families</li>
+</ul>
+<p>the developer should:</p>
+<ol>
+<li>inspect the current implementation;</li>
+<li>identify authoritative project sources;</li>
+<li>verify current behavior;</li>
+<li>identify the actual deficiency;</li>
+<li>determine whether expansion is necessary;</li>
+<li>repair current-scope problems first when practical;</li>
+<li>add the smallest new surface that solves the demonstrated need;</li>
+<li>verify again.</li>
+</ol>
+<h3 id="gate-states">Gate states</h3>
+<pre data-lang="text"><code class="language-text">PASS  current scope is coherent enough to expand
+HOLD  direction may be valid, but current scope needs repair first
+DENY  proposal conflicts with evidence, authority, usability, or justified scope
+</code></pre>
+<h3 id="kotlin-style-gate-model">Kotlin-style gate model</h3>
+<pre data-lang="kotlin"><code class="language-kotlin">enum class ExpansionDecision {
+    PASS,
+    HOLD,
+    DENY,
+}
+
+data class ExpansionGate(
+    val decision: ExpansionDecision,
+    val evidence: List&lt;String&gt;,
+    val blockers: List&lt;String&gt; = emptyList(),
+    val permittedNextScope: String? = null,
+)
+</code></pre>
+<p>A <code>PASS</code> without evidence should be treated as an unsupported claim.</p>
+<hr/>
+<h1 id="13-ui-philosophy">13. UI philosophy</h1>
+<p>Goblin rejects generic model-generated application styling.</p>
+<p>It should not automatically reach for:</p>
+<ul>
+<li>blue/gray "AI dashboards"</li>
+<li>purple gradients</li>
+<li>endless rounded cards</li>
+<li>pills everywhere</li>
+<li>arbitrary glow</li>
+<li>fake system-health panels</li>
+<li>fake agent activity</li>
+<li>fake token counters</li>
+<li>decorative graphs with no user task</li>
+<li>giant marketing hero sections inside practical tools</li>
+</ul>
+<p>Existing project sources outrank invented styling:</p>
+<pre data-lang="text"><code class="language-text">project screenshots
+&gt; design references
+&gt; theme tokens
+&gt; existing component vocabulary
+&gt; product constraints
+&gt; generic Goblin preferences
+&gt; model taste
+</code></pre>
+<p>A tool should look <strong>usable before it looks marketable</strong>.</p>
+<hr/>
+<h1 id="14-openrndr-kotlin-visual-reference-node">14. OPENRNDR / Kotlin visual-reference node</h1>
+<p>Goblin may carry structured reference nodes for implementation or design research.</p>
+<p>The following source node is intentionally a <strong>reference</strong>, not an activated dependency.</p>
+<pre data-lang="yaml"><code class="language-yaml">prompt_node:
+  id: "c640ffd8-4e88-4aa4-a5fa-bb51f7cd04e7"
+  title: "OpenRNDR-Kotlin-Refs"
+  summary: "OpenRNDR (Kotlin creative-coding framework) — reference set for a Kotlin-side visual/UI layer."
+  tree_path: "Prompt Tree/General"
+  keywords:
+    - "openrndr"
+    - "kotlin"
+    - "creative-coding"
+    - "graphics"
+  created_at: "2026-09-08T20:44:09.356Z"
+  updated_at: "2026-09-09T17:29:57.654Z"
+  reference_status: "candidate"
+  activation: "not-wired"
+  body: |-
+    # OpenRNDR — Kotlin creative-coding reference
+
+    - https://openrndr.org/made-with-openrndr/
+    - https://guide.openrndr.org/kotlinLanguageAndTools/
+    - https://guide.openrndr.org/programBasics/
+    - https://guide.openrndr.org/drawing/
+    - https://guide.openrndr.org/interaction/
+    - https://guide.openrndr.org/animation/
+    - https://guide.openrndr.org/extensions/
+    - https://guide.openrndr.org/fileIO/
+    - https://guide.openrndr.org/debugging/
+    - https://guide.openrndr.org/useCases/
+    - https://guide.openrndr.org/bestPractices/
+</code></pre>
+<h3 id="reference-interpretation">Reference interpretation</h3>
+<p>The node means:</p>
+<pre data-lang="text"><code class="language-text">OPENRNDR is worth studying for:
+  - real-time drawing
+  - interaction
+  - animation
+  - render-loop structure
+  - extension/lifecycle design
+  - Kotlin-native graphics patterns
+
+The node does NOT mean:
+  - OPENRNDR is installed
+  - OPENRNDR is a Goblin dependency
+  - NodeX already uses OPENRNDR
+  - a canvas renderer has been approved
+  - a DOM renderer should be replaced
+</code></pre>
+<p>The current OPENRNDR API exposes application surfaces for JVM and web targets and includes an <code>openrndr-webgl</code> module. Treat that as a reason to <strong>evaluate</strong> web/canvas use when a real need appears, not as automatic authorization to add the framework.</p>
+<h3 id="candidate-decision-tree">Candidate decision tree</h3>
+<pre data-lang="text"><code class="language-text">Need richer visual behavior?
+        |
+        +-- no --&gt; keep current UI
+        |
+        +-- yes
+             |
+             +-- DOM/CSS handles it cleanly? --&gt; stay DOM-native
+             |
+             +-- canvas/render-loop materially helps?
+                    |
+                    +-- no --&gt; stay DOM-native
+                    |
+                    +-- yes --&gt; prototype smallest OPENRNDR/WebGL slice
+                                  |
+                                  +-- verify build/runtime/size/interop
+                                  |
+                                  +-- PASS -&gt; consider adoption
+                                  +-- HOLD -&gt; repair prototype
+                                  +-- DENY -&gt; remove candidate
+</code></pre>
+<hr/>
+<h1 id="15-prompt-node-rendering-contract">15. Prompt-node rendering contract</h1>
+<p>Reference nodes should be renderable into human-readable documentation without losing machine-readable identity.</p>
+<h3 id="suggested-kotlin-data-model">Suggested Kotlin data model</h3>
+<pre data-lang="kotlin"><code class="language-kotlin">import kotlinx.datetime.Instant
+
+data class PromptNode(
+    val id: String,
+    val title: String,
+    val summary: String,
+    val treePath: String,
+    val keywords: List&lt;String&gt;,
+    val createdAt: Instant?,
+    val updatedAt: Instant?,
+    val body: String,
+)
+
+data class RenderedPromptNode(
+    val heading: String,
+    val metadataTable: Map&lt;String, String&gt;,
+    val bodyMarkdown: String,
+)
+</code></pre>
+<h3 id="markdown-renderer">Markdown renderer</h3>
+<pre data-lang="kotlin"><code class="language-kotlin">fun PromptNode.renderMarkdown(): String = buildString {
+    appendLine("## $title")
+    appendLine()
+    appendLine("&gt; $summary")
+    appendLine()
+    appendLine("| Field | Value |")
+    appendLine("|---|---|")
+    appendLine("| ID | `$id` |")
+    appendLine("| Tree path | `$treePath` |")
+    appendLine("| Keywords | ${keywords.joinToString { "`$it`" }} |")
+
+    createdAt?.let {
+        appendLine("| Created | `$it` |")
+    }
+
+    updatedAt?.let {
+        appendLine("| Updated | `$it` |")
+    }
+
+    appendLine()
+    appendLine(body.trim())
+}
+</code></pre>
+<h3 id="renderer-invariants">Renderer invariants</h3>
+<p>A prompt-node renderer should:</p>
+<ul>
+<li>preserve the node ID;</li>
+<li>preserve the source body;</li>
+<li>normalize accidental duplicate quoting in keyword fields;</li>
+<li>avoid inventing activation state unless it is explicitly added by the project;</li>
+<li>keep source metadata separate from rendered prose;</li>
+<li>treat timestamps as provenance, not content authority;</li>
+<li>keep a stable output ordering;</li>
+<li>make duplicate-node detection possible before rendering;</li>
+<li>avoid silently merging two different nodes that merely share a title.</li>
+</ul>
+<h3 id="duplicate-node-rule">Duplicate-node rule</h3>
+<p>The same <code>OpenRNDR-Kotlin-Refs</code> node was supplied repeatedly with the same ID and content.</p>
+<p>For rendering:</p>
+<pre data-lang="text"><code class="language-text">same ID + same semantic content
+=&gt; render once
+
+same ID + changed content
+=&gt; treat as a version/conflict requiring reconciliation
+
+different ID + same title
+=&gt; preserve both until explicitly deduplicated
+</code></pre>
+<p>This prevents a prompt tree export from inflating documentation through repeated copies.</p>
+<hr/>
+<h1 id="16-verification-philosophy">16. Verification philosophy</h1>
+<p>A feature is not done because code was written.</p>
+<p>Verification should match the claim.</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Evidence</th>
+<th>Appropriate claim</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>V0</td>
+<td>visual inspection only</td>
+<td>design observation</td>
+</tr>
+<tr>
+<td>V1</td>
+<td>syntax / format check</td>
+<td>file parses</td>
+</tr>
+<tr>
+<td>V2</td>
+<td>focused compile / type-check</td>
+<td>touched code compiles</td>
+</tr>
+<tr>
+<td>V3</td>
+<td>focused tests</td>
+<td>targeted behavior passes</td>
+</tr>
+<tr>
+<td>V4</td>
+<td>broader tests</td>
+<td>wider regression confidence</td>
+</tr>
+<tr>
+<td>V5</td>
+<td>integration check</td>
+<td>connected components cooperate</td>
+</tr>
+<tr>
+<td>V6</td>
+<td>package/build artifact</td>
+<td>distributable artifact exists</td>
+</tr>
+<tr>
+<td>V7</td>
+<td>runtime smoke test</td>
+<td>application starts / core path runs</td>
+</tr>
+<tr>
+<td>V8</td>
+<td>device/browser verification</td>
+<td>target environment actually exercised</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example">Example</h3>
+<p>If Android builds but no device or emulator was available:</p>
+<pre data-lang="text"><code class="language-text">APK build: PASS
+install: NOT TESTED
+launch: NOT TESTED
+device runtime: NOT VERIFIED
+</code></pre>
+<p>Do not collapse that into:</p>
+<pre data-lang="text"><code class="language-text">Android: PASS
+</code></pre>
+<p>Evidence should get more precise as claims get stronger.</p>
+<hr/>
+<h1 id="17-evidence-first-completion-format">17. Evidence-first completion format</h1>
+<p>A Goblin-guided development pass should prefer compact evidence over narrative confidence.</p>
+<pre data-lang="text"><code class="language-text">status: PASS | PARTIAL | HOLD | FAIL
+
+summary:
+- what changed
+- why it changed
+
+files_touched:
+- exact paths
+
+verification:
+- command/check: result
+- command/check: result
+
+runtime:
+- verified | not verified | not applicable
+
+limitations:
+- unresolved facts
+- untested surfaces
+- known blockers
+
+next:
+- smallest justified next step
+</code></pre>
+<h3 id="unsupported-completion-language-to-avoid">Unsupported completion language to avoid</h3>
+<p>Avoid claims like:</p>
+<ul>
+<li>"fully production ready" without production evidence;</li>
+<li>"works perfectly" after static inspection;</li>
+<li>"all tests pass" if only one suite was run;</li>
+<li>"safe" when only formatting was verified;</li>
+<li>"installed" when a symlink target was never resolved.</li>
+</ul>
+<hr/>
+<h1 id="18-model-adapter-lifecycle">18. Model adapter lifecycle</h1>
+<p>Do not clone the entire agent and edit random lines.</p>
+<p>Use this lifecycle:</p>
+<pre data-lang="text"><code class="language-text">OBSERVE
+  |
+  v
+collect model-specific failure/success evidence
+  |
+  v
+ISOLATE
+  |
+  v
+identify behavior that is actually model-sensitive
+  |
+  v
+PATCH
+  |
+  v
+write smallest overlay change
+  |
+  v
+RENDER
+  |
+  v
+generate agent output
+  |
+  v
+VERIFY
+  |
+  v
+test source consistency + observed behavior
+  |
+  v
+PROMOTE
+</code></pre>
+<h3 id="adding-another-model">Adding another model</h3>
+<ol>
+<li>add a registry entry;</li>
+<li>collect real failure/success evidence;</li>
+<li>identify only the behavior that differs from the core;</li>
+<li>write the smallest overlay;</li>
+<li>render;</li>
+<li>verify;</li>
+<li>document limitations;</li>
+<li>promote only after evidence supports the profile.</li>
+</ol>
+<p>See <a href="docs/ADDING-A-MODEL.md"><code>docs/ADDING-A-MODEL.md</code></a>.</p>
+<hr/>
+<h1 id="19-suggested-model-registry-semantics">19. Suggested model-registry semantics</h1>
+<p>A registry entry should be able to distinguish between architectural availability and actual support.</p>
+<p>Conceptually:</p>
+<pre data-lang="json"><code class="language-json">{
+  "family": "glm-5.3",
+  "status": "pioneer-ready",
+  "overlay": "models/glm-5.3.md",
+  "claims": {
+    "renderable": true,
+    "actively_tuned": true,
+    "verified": true
+  }
+}
+</code></pre>
+<p>A reserved family should look more like:</p>
+<pre data-lang="json"><code class="language-json">{
+  "family": "deepseek",
+  "status": "reserved",
+  "overlay": null,
+  "claims": {
+    "renderable": false,
+    "actively_tuned": false,
+    "verified": false
+  }
+}
+</code></pre>
+<p>Do not let the presence of a name in the registry imply support that has not been demonstrated.</p>
+<hr/>
+<h1 id="20-source-precedence">20. Source precedence</h1>
+<p>When Goblin enters an existing project, it should not treat its own defaults as product authority.</p>
+<p>Suggested precedence:</p>
+<pre data-lang="text"><code class="language-text">1. explicit user instruction
+2. authoritative project requirements
+3. current source code and tests
+4. project-local design system / screenshots / tokens
+5. documented repository conventions
+6. Goblin model-neutral development core
+7. model overlay preferences
+8. generic model taste
+</code></pre>
+<p>If levels disagree, report the conflict instead of quietly choosing the most convenient one.</p>
+<hr/>
+<h1 id="21-ui-expansion-checklist">21. UI expansion checklist</h1>
+<p>Before adding a visual subsystem:</p>
+<ul>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>inspect existing layout and component vocabulary;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>identify the user task that is currently blocked;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>identify whether the problem is visual, structural, or data-related;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>check whether existing CSS/components can solve it;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>verify whether interaction requires canvas/WebGL at all;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>avoid replacing usable native controls for visual novelty;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>avoid fake telemetry;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>avoid decorative information density;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>add the smallest new primitive;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>verify keyboard and pointer behavior when relevant;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>verify browser/runtime behavior;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>compare against project references before calling it done.</li>
+</ul>
+<p>OPENRNDR belongs <strong>after</strong> the "does this actually need a render loop?" question, not before it.</p>
+<hr/>
+<h1 id="22-update-workflow">22. Update workflow</h1>
+<p>Recommended local update flow:</p>
+<pre data-lang="bash"><code class="language-bash">cd "/home/sticky-ricky/repos/Build Dev/build-dev-goblin-logic-manager/Goblin-Logic-Manager"
+
+git status --short
+git fetch
+git log --oneline --decorate --max-count=10
+</code></pre>
+<p>Review the incoming diff before changing the checked-out version.</p>
+<p>Then, after updating:</p>
+<pre data-lang="bash"><code class="language-bash">python3 scripts/render_agent.py
+python3 scripts/verify.py
+readlink -f "$HOME/.config/opencode/agents/goblin-logic-manager.md"
+</code></pre>
+<p>Because the OpenCode integration points at the repository, you do not need to recopy generated files into the config tree after every safe update.</p>
+<hr/>
+<h1 id="23-troubleshooting">23. Troubleshooting</h1>
+<h2 id="the-symlink-already-exists">"The symlink already exists"</h2>
+<p>Inspect it:</p>
+<pre data-lang="bash"><code class="language-bash">ls -ld "$HOME/.config/opencode/goblin-logic-manager"
+readlink "$HOME/.config/opencode/goblin-logic-manager"
+readlink -f "$HOME/.config/opencode/goblin-logic-manager"
+</code></pre>
+<p>Do not overwrite until you know whether it points at:</p>
+<ul>
+<li>the expected repository;</li>
+<li>an older Goblin checkout;</li>
+<li>a different project;</li>
+<li>a broken path.</li>
+</ul>
+<h2 id="the-generated-agent-link-is-broken">"The generated agent link is broken"</h2>
+<p>Check both sides:</p>
+<pre data-lang="bash"><code class="language-bash">readlink "$HOME/.config/opencode/agents/goblin-logic-manager.md"
+
+test -f \
+  "/home/sticky-ricky/repos/Build Dev/build-dev-goblin-logic-manager/Goblin-Logic-Manager/.opencode/agents/goblin-logic-manager.md" \
+  &amp;&amp; echo "source exists"
+</code></pre>
+<p>If the source is missing, render first:</p>
+<pre data-lang="bash"><code class="language-bash">python3 scripts/render_agent.py
+</code></pre>
+<h2 id="i-edited-the-generated-agent-directly">"I edited the generated agent directly"</h2>
+<p>Treat the generated file as derived output.</p>
+<p>Move the real change into:</p>
+<pre data-lang="text"><code class="language-text">core/developer-core.md
+</code></pre>
+<p>or the relevant:</p>
+<pre data-lang="text"><code class="language-text">models/&lt;family&gt;.md
+</code></pre>
+<p>Then render again.</p>
+<h2 id="a-new-model-seems-to-work-with-the-glm-prompt">"A new model seems to work with the GLM prompt"</h2>
+<p>That is evidence worth recording, not enough evidence to claim a tuned adapter.</p>
+<p>Create a proper model overlay only after identifying which differences are actually necessary.</p>
+<hr/>
+<h1 id="24-repository-hygiene">24. Repository hygiene</h1>
+<p>Before a release or meaningful checkpoint:</p>
+<pre data-lang="bash"><code class="language-bash">git status --short
+python3 scripts/render_agent.py
+python3 scripts/verify.py
+git diff --check
+</code></pre>
+<p>Recommended questions:</p>
+<pre data-lang="text"><code class="language-text">Are generated files current?
+Did any model-specific workaround leak into the core?
+Did the registry claim more support than exists?
+Did setup instructions broaden authority?
+Did documentation imply runtime verification that did not happen?
+Did a reference dependency become an accidental dependency?
+</code></pre>
+<hr/>
+<h1 id="25-release-gate">25. Release gate</h1>
+<p>A release should not be cut merely because the README looks complete.</p>
+<h3 id="minimum-release-checklist">Minimum release checklist</h3>
+<ul>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>version updated;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>changelog updated;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>release notes updated;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>default agent renders;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>repository verification passes;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>generated agent is current;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>model registry is internally consistent;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>no accidental config files or secrets are included;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>install instructions were checked against the actual layout;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>rollback instructions still work;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>model support claims match evidence;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>reference-only integrations remain clearly labeled;</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>license status is explicit.</li>
+</ul>
+<hr/>
+<h1 id="26-security-and-trust-notes">26. Security and trust notes</h1>
+<p>Goblin's setup philosophy reduces accidental config entanglement, but does not remove the need for normal repository review.</p>
+<p>Especially inspect:</p>
+<pre data-lang="text"><code class="language-text">*.sh
+package.json scripts
+Makefile targets
+installers
+hooks
+plugins
+MCP server definitions
+commands
+policy files
+generated executables
+download helpers
+sudo usage
+network bootstrap code
+</code></pre>
+<h3 id="rule-of-thumb">Rule of thumb</h3>
+<pre data-lang="text"><code class="language-text">A prompt file can influence an agent.
+An executable can influence the machine.
+A config rewrite can influence every future agent session.
+</code></pre>
+<p>Treat those as different trust surfaces.</p>
+<hr/>
+<h1 id="27-for-repository-reviewers">27. For repository reviewers</h1>
+<p>A reviewer should be able to audit Goblin in this order:</p>
+<pre data-lang="text"><code class="language-text">1. README.md
+2. AGENTS.md
+3. core/developer-core.md
+4. model-registry.json
+5. models/glm-5.3.md
+6. scripts/render_agent.py
+7. scripts/verify.py
+8. generated .opencode agent
+9. docs/DESIGN.md
+10. release notes / changelog
+</code></pre>
+<p>The review should ask whether the generated output follows from the declared inputs without unexpected authority or hidden behavior.</p>
+<hr/>
+<h1 id="28-for-coding-agents-entering-this-repository">28. For coding agents entering this repository</h1>
+<p>Use this orientation packet:</p>
+<pre data-lang="text"><code class="language-text">You are working inside Goblin-Logic-Manager.
+
+Before editing:
+1. Read README.md.
+2. Read AGENTS.md.
+3. Inspect git status.
+4. Identify whether the requested change belongs to:
+   a. model-neutral core,
+   b. model overlay,
+   c. renderer,
+   d. verification,
+   e. documentation,
+   f. generated output.
+5. Do not hand-edit generated output as the source of truth.
+6. Do not broaden installation authority.
+7. Do not add a framework merely because it is available.
+8. If UI work is requested, inspect existing project references first.
+9. Run the narrowest relevant verification.
+10. Report only evidence-backed results.
+
+Primary gate:
+NO EXPANSION WITHOUT VALIDATION.
+</code></pre>
+<hr/>
+<h1 id="29-project-status">29. Project status</h1>
+<p><strong>v0.1.0 — GLM pioneer release</strong></p>
+<p>Current state:</p>
+<pre data-lang="text"><code class="language-text">core architecture          present
+GLM-5.3 overlay            pioneer-ready
+other model families       reserved only
+renderer                    present
+verification helper         present
+generated OpenCode agent    present
+OPENRNDR integration        reference only / not wired
+license                     not selected
+</code></pre>
+<p>The architecture is prepared for future model families while only claiming tuning for GLM-5.3.</p>
+<hr/>
+<h1 id="30-license">30. License</h1>
+<p>A license has <strong>not</strong> been selected in this release.</p>
+<p>Choose and add the intended open-source license before public redistribution if you want downstream reuse rights to be explicit.</p>
+<hr/>
+<h1 id="31-reference-index">31. Reference index</h1>
+<h2 id="goblin-internal">Goblin internal</h2>
+<ul>
+<li><a href="AGENTS.md"><code>AGENTS.md</code></a></li>
+<li><a href="core/developer-core.md"><code>core/developer-core.md</code></a></li>
+<li><a href="models/README.md"><code>models/README.md</code></a></li>
+<li><a href="models/glm-5.3.md"><code>models/glm-5.3.md</code></a></li>
+<li><a href="docs/ADDING-A-MODEL.md"><code>docs/ADDING-A-MODEL.md</code></a></li>
+<li><a href="docs/DESIGN.md"><code>docs/DESIGN.md</code></a></li>
+<li><a href="docs/RELEASE-NOTES-v0.1.0.md"><code>docs/RELEASE-NOTES-v0.1.0.md</code></a></li>
+</ul>
+<h2 id="openrndr-candidate-references">OPENRNDR candidate references</h2>
+<ul>
+<li><a href="https://openrndr.org/">https://openrndr.org/</a></li>
+<li><a href="https://openrndr.org/made-with-openrndr/">https://openrndr.org/made-with-openrndr/</a></li>
+<li><a href="https://guide.openrndr.org/kotlinLanguageAndTools/">https://guide.openrndr.org/kotlinLanguageAndTools/</a></li>
+<li><a href="https://guide.openrndr.org/programBasics/">https://guide.openrndr.org/programBasics/</a></li>
+<li><a href="https://guide.openrndr.org/drawing/">https://guide.openrndr.org/drawing/</a></li>
+<li><a href="https://guide.openrndr.org/interaction/">https://guide.openrndr.org/interaction/</a></li>
+<li><a href="https://guide.openrndr.org/animation/">https://guide.openrndr.org/animation/</a></li>
+<li><a href="https://guide.openrndr.org/extensions/">https://guide.openrndr.org/extensions/</a></li>
+<li><a href="https://guide.openrndr.org/fileIO/">https://guide.openrndr.org/fileIO/</a></li>
+<li><a href="https://guide.openrndr.org/debugging/">https://guide.openrndr.org/debugging/</a></li>
+<li><a href="https://guide.openrndr.org/useCases/">https://guide.openrndr.org/useCases/</a></li>
+<li><a href="https://guide.openrndr.org/bestPractices/">https://guide.openrndr.org/bestPractices/</a></li>
+</ul>
+<hr/>
+<h2 id="closing-rule">Closing rule</h2>
+<pre data-lang="text"><code class="language-text">          BUILD SMALL
+              │
+              ▼
+            INSPECT
+              │
+              ▼
+           VALIDATE
+              │
+        ┌─────┴─────┐
+        │           │
+      PASS         HOLD
+        │           │
+        ▼           ▼
+     EXPAND       REPAIR
+        │           │
+        └─────┬─────┘
+              ▼
+            VERIFY
+</code></pre>
+<blockquote>
+<p><strong>No expansion without validation. No completion claim without evidence. No hidden merge into user trust.</strong></p>
+</blockquote>
+
+      <div class="footer-note">Rendered locally from <code>README.overengineered.with-banner.md</code>.</div>
+      <div class="image-credit">Image by GPT5.6-SOL.</div>
+
+    </article>
+  </main>
+  <aside class="right-rail">
+    <div class="rail-card">
+      <h4>Render contract</h4>
+      <div class="kv">
+        <span>source</span><span>Markdown</span>
+        <span>style</span><span>Kotlin / OPENRNDR-ref</span>
+        <span>authority</span><span>none</span>
+        <span>mutation</span><span>none</span>
+      </div>
+      <div class="rule"><strong>NO EXPANSION</strong><br>without validation.</div>
+    </div>
+    <div class="rail-card">
+      <h4>Visual rule</h4>
+      <div style="font-size:12px;color:#aaa5b2">Documentation first. Accents communicate type and state; they do not pretend to be runtime telemetry.</div>
+    </div>
+  </aside>
+</div>
+<script>
+for (const pre of document.querySelectorAll('pre')) {
+  const btn=document.createElement('button'); btn.className='copy'; btn.textContent='copy';
+  btn.onclick=async()=>{ const c=pre.querySelector('code'); if(!c)return; await navigator.clipboard.writeText(c.innerText); btn.textContent='copied'; setTimeout(()=>btn.textContent='copy',900); };
+  pre.appendChild(btn);
+}
+const links=[...document.querySelectorAll('.toc a')];
+const heads=[...document.querySelectorAll('h1[id],h2[id],h3[id]')];
+const obs=new IntersectionObserver(entries=>{
+  const hit=entries.filter(e=>e.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top)[0];
+  if(!hit)return; links.forEach(a=>a.style.background=''); const a=links.find(x=>x.getAttribute('href')==='#'+hit.target.id); if(a)a.style.background='rgba(127,82,255,.11)';
+},{rootMargin:'-80px 0px -76% 0px'}); heads.forEach(h=>obs.observe(h));
+</script>
+<!-- Optional Mermaid enhancement: if network is available, the fallback source remains visible otherwise. -->
+<script type="module">
+try {
+  const mermaid = (await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs')).default;
+  mermaid.initialize({startOnLoad:false, theme:'dark', securityLevel:'strict'});
+  let i=0;
+  for (const pre of document.querySelectorAll('pre.mermaid-fallback')) {
+    const code=pre.querySelector('code')?.textContent || '';
+    const host=document.createElement('div'); host.className='mermaid-live';
+    const id='mermaid-'+(++i); const result=await mermaid.render(id, code); host.innerHTML=result.svg; pre.replaceWith(host);
+  }
+} catch (e) { /* offline: code-fence fallback intentionally remains */ }
+</script>
+</body></html>

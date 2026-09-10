@@ -1,0 +1,11 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  // OpenCode stable 1.18.30 compaction schema.
+  // Do not replace these with V2 keep.tokens/buffer keys while running 1.18.x.
+  "compaction": {
+    "auto": true,
+    "prune": false,
+    "reserved": 10000
+  }
+}

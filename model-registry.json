@@ -1,0 +1,34 @@
+{
+  "schema": "goblin-logic-manager/model-registry/v1",
+  "default_profile": "glm-5.3",
+  "profiles": {
+    "glm-5.3": {
+      "display_name": "GLM-5.3",
+      "status": "pioneer-ready",
+      "opencode_model": "tokenrouter/z-ai/glm-5.3-free",
+      "overlay": "models/glm-5.3.md",
+      "notes": "First tuned Goblin profile. Markdown-first, low-ceremony overlay."
+    },
+    "qwen": {
+      "display_name": "Qwen",
+      "status": "reserved",
+      "opencode_model": null,
+      "overlay": null,
+      "notes": "Future adapter. Requires model/provider ID selection and tuning evidence."
+    },
+    "deepseek": {
+      "display_name": "DeepSeek",
+      "status": "reserved",
+      "opencode_model": null,
+      "overlay": null,
+      "notes": "Future adapter. Requires model/provider ID selection and tuning evidence."
+    },
+    "kimi": {
+      "display_name": "Kimi",
+      "status": "reserved",
+      "opencode_model": null,
+      "overlay": null,
+      "notes": "Future adapter. Requires model/provider ID selection and tuning evidence."
+    }
+  }
+}

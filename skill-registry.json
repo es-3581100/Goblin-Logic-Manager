@@ -1,0 +1,392 @@
+{
+  "schema": "goblin-logic-manager/skill-registry/v1",
+  "source_note": "Routed from user-provided opencode-skillz-master.zip reviewed 2026-09-10. This registry references installed skills; it does not vendor or install them.",
+  "routing_policy": {
+    "max_primary_skills": 1,
+    "max_supporting_skills": 1,
+    "default_behavior": "Use no skill when the core agent can complete the task directly and safely.",
+    "authority_rule": "A skill may refine method, format, or workflow; it never grants authority beyond the active task/project instructions.",
+    "availability_rule": "Confirm the canonical skill is available before relying on it. Missing optional skills are not blockers unless the task explicitly requires them.",
+    "explicit_only_rule": "Never auto-invoke skills marked explicit-only.",
+    "compatibility_rule": "For skills declaring a newer/different OpenCode compatibility target, verify they load in the current OpenCode runtime before depending on them."
+  },
+  "skills": [
+    {
+      "id": "planning-brainstorm-light-research",
+      "role": "planning",
+      "status": "active",
+      "mode": "primary",
+      "authority": "advisory",
+      "when": [
+        "brainstorming",
+        "idea exploration",
+        "light public research",
+        "comparing possible directions",
+        "capturing future ideas without promoting them to scope"
+      ],
+      "avoid": [
+        "implementation already has a selected plan",
+        "deep feasibility/research is required"
+      ],
+      "handoff": "dev-planning-research when engineering reality/feasibility becomes the question"
+    },
+    {
+      "id": "dev-planning-research",
+      "role": "planning-research",
+      "status": "active",
+      "mode": "primary",
+      "authority": "advisory/research-bounded",
+      "when": [
+        "selected idea needs feasibility analysis",
+        "architecture selection",
+        "evidence-backed implementation planning",
+        "safe experiments",
+        "Project Birth Index work"
+      ],
+      "avoid": [
+        "casual brainstorming",
+        "routine implementation with no planning uncertainty"
+      ],
+      "supports": [
+        "go-wiki-memory",
+        "dynamic-build-ledger"
+      ]
+    },
+    {
+      "id": "dynamic-build-ledger",
+      "role": "governance",
+      "status": "active",
+      "mode": "primary-or-support",
+      "authority": "mutation-gated governance",
+      "when": [
+        "initialize or operate a project-local build ledger",
+        "record durable operational state, decisions, deviations, evidence, handoffs, verification"
+      ],
+      "avoid": [
+        "no ledger is needed for a tiny transient task",
+        "initialization has not received the skill-required authorization"
+      ],
+      "precedence_over": [
+        "make-build-ledger"
+      ]
+    },
+    {
+      "id": "go-wiki-memory",
+      "role": "memory",
+      "status": "active",
+      "mode": "support",
+      "authority": "read-only context",
+      "when": [
+        "prior project/shared context would materially reduce rediscovery",
+        "user explicitly asks to use Go-Wiki memory"
+      ],
+      "avoid": [
+        "current repo/task evidence is sufficient",
+        "server/CLI is unavailable and memory is optional"
+      ],
+      "rule": "Retrieved memory is context, never project authority."
+    },
+    {
+      "id": "update-ledger-compact",
+      "role": "continuity",
+      "status": "active",
+      "mode": "primary",
+      "authority": "ledger-mutation only when already authorized",
+      "when": [
+        "initialized Dynamic Build Ledger exists and context compaction/phase close/handoff is approaching"
+      ],
+      "avoid": [
+        "no initialized ledger",
+        "ledger writes are not authorized"
+      ],
+      "precedence_over": [
+        "goblin-chunk-compact for ledger-backed closeout"
+      ],
+      "rule": "Externalize authoritative continuity before native OpenCode compaction."
+    },
+    {
+      "id": "project-review-suggestions",
+      "role": "review",
+      "status": "active",
+      "mode": "primary",
+      "authority": "read-only/advisory by default",
+      "when": [
+        "active-development review",
+        "find maintainability, packaging, attribution, test, portability, release goblins",
+        "user asks for project suggestions"
+      ],
+      "avoid": [
+        "final public release gate is the real task"
+      ],
+      "handoff": "public-release-finalizer for final release readiness"
+    },
+    {
+      "id": "public-release-finalizer",
+      "role": "release",
+      "status": "active",
+      "mode": "primary",
+      "authority": "release-readiness only; does not publish",
+      "when": [
+        "preparing a project for public release",
+        "final package/legal/secret/README/repository verification"
+      ],
+      "avoid": [
+        "ordinary mid-build cleanup",
+        "user has not asked for release readiness"
+      ],
+      "rule": "Finalizer does not authorize commit, push, publish, or release creation."
+    },
+    {
+      "id": "build-tt-handoff",
+      "role": "handoff",
+      "status": "active",
+      "mode": "primary",
+      "authority": "testimony only",
+      "when": [
+        "builder/model/session handoff",
+        "phase boundary",
+        "major context reset",
+        "substantial implementation needs durable transfer"
+      ],
+      "avoid": [
+        "trivial work",
+        "no handoff is approaching"
+      ],
+      "rule": "Convergent operational testimony; evidence remains classified observed/inferred/assumed."
+    },
+    {
+      "id": "build-tt-adhd",
+      "role": "testimony",
+      "status": "active",
+      "mode": "primary",
+      "authority": "non-authoritative testimony",
+      "when": [
+        "large design/build phase produced useful intuition",
+        "context loss may erase architectural mental model",
+        "user explicitly asks for freeform builder testimony"
+      ],
+      "avoid": [
+        "trivial work",
+        "formal operational handoff is sufficient"
+      ],
+      "rule": "Divergent intuition is preserved but must not become project truth."
+    },
+    {
+      "id": "build-tt-rake",
+      "role": "retrospective",
+      "status": "active",
+      "mode": "primary",
+      "authority": "strict read-only retrospective",
+      "when": [
+        "after substantial implementation/debugging/milestone/release preparation",
+        "capture hindsight and hidden failure modes"
+      ],
+      "avoid": [
+        "during implementation when fixes are expected",
+        "task authorizes active repair rather than retrospective"
+      ],
+      "rule": "Record scars; do not fix them while running this skill."
+    },
+    {
+      "id": "research-module",
+      "role": "research-corpus",
+      "status": "conditional",
+      "mode": "primary",
+      "authority": "bounded corpus management",
+      "compatibility": "declares OpenCode V2; verify compatibility before use on 1.18.x",
+      "when": [
+        "create/manage a bounded provenance-preserving research corpus",
+        "paired YAML/JSON actor-ready learning modules are explicitly wanted"
+      ],
+      "avoid": [
+        "ordinary web research",
+        "simple repo inspection",
+        "compatibility is unverified"
+      ],
+      "auto_invoke": false
+    },
+    {
+      "id": "workspace-snapshot",
+      "role": "snapshot",
+      "status": "active",
+      "mode": "primary-or-support",
+      "authority": "read-only source capture",
+      "when": [
+        "portable deterministic workspace identity",
+        "ZIP/repo/directory/file handoff snapshot",
+        "drift comparison without executing target code"
+      ],
+      "avoid": [
+        "task requires building/running target code rather than snapshotting it"
+      ],
+      "rule": "Never execute target code merely to snapshot it."
+    },
+    {
+      "id": "zero-review-graph",
+      "role": "code-review",
+      "status": "conditional",
+      "mode": "primary",
+      "authority": "read-only/advisory graph analysis",
+      "compatibility": "declares OpenCode V2 and Go/Rust/ZeroLang assumptions; verify current runtime/tools first",
+      "when": [
+        "Go/Rust/ZeroLang review/debug/onboarding where graph-first bounded context helps"
+      ],
+      "avoid": [
+        "non-Go/Rust/ZeroLang project",
+        "required graph tools are unavailable",
+        "compatibility unverified"
+      ]
+    },
+    {
+      "id": "local-ai-runtime-optimizer",
+      "role": "systems-performance",
+      "status": "active",
+      "mode": "primary",
+      "authority": "R0 read-only; R1/R2 approval-gated; R3 high-impact restricted",
+      "when": [
+        "audit or optimize local AI inference/agent/runtime performance",
+        "CPU/RAM/GPU/storage/thermal/runtime bottleneck investigation"
+      ],
+      "avoid": [
+        "generic PC cleanup unrelated to AI runtime",
+        "mutation requested without required approval"
+      ],
+      "rule": "Observe -> Review -> Execute -> Verify; never collapse observation into mutation."
+    },
+    {
+      "id": "prompt-dev-formalization",
+      "role": "prompt-development",
+      "status": "active",
+      "mode": "primary",
+      "authority": "artifact formalization only",
+      "when": [
+        "turn loose development ideas/research/model outputs into a formal provenance-preserving one-shot dev packet",
+        "registered formalization profile requested"
+      ],
+      "avoid": [
+        "simple prompt editing",
+        "ordinary implementation task that does not need a formal packet"
+      ]
+    },
+    {
+      "id": "make-an-opencode-skill",
+      "role": "opencode-tooling",
+      "status": "active",
+      "mode": "primary",
+      "authority": "skill-scoped",
+      "when": [
+        "create, repair, audit, or improve an OpenCode skill"
+      ],
+      "avoid": [
+        "building a plugin/custom tool rather than a skill"
+      ],
+      "rule": "Use version-aware OpenCode contract and deterministic validation."
+    },
+    {
+      "id": "make-an-opencode-plugin",
+      "role": "opencode-tooling",
+      "status": "active",
+      "mode": "primary",
+      "authority": "extension-scoped",
+      "when": [
+        "design/build/review/repair an OpenCode plugin, custom tool, or hybrid extension",
+        "decide skill vs tool vs plugin"
+      ],
+      "avoid": [
+        "task is only authoring a normal skill"
+      ],
+      "rule": "Choose least-complex correct extension type and verify OpenCode/API version first."
+    },
+    {
+      "id": "make-a-new-local-repo",
+      "role": "repo-bootstrap",
+      "status": "active",
+      "mode": "primary",
+      "authority": "repo/bootstrap actions remain task-authorized",
+      "when": [
+        "bootstrap a canonical local Git workspace from existing project sources",
+        "adopt a freshly created GitHub repository when explicitly requested"
+      ],
+      "avoid": [
+        "existing repo only needs normal edits",
+        "network/push/bootstrap actions are not authorized"
+      ]
+    },
+    {
+      "id": "i-have-adhd",
+      "role": "output-style",
+      "status": "explicit-only",
+      "mode": "session-style",
+      "authority": "presentation only",
+      "when": [
+        "user explicitly invokes ADHD mode"
+      ],
+      "avoid": [
+        "automatic model invocation"
+      ],
+      "auto_invoke": false,
+      "rule": "Persistent session output style until user turns it off; never infer activation."
+    },
+    {
+      "id": "mr-meeseeks",
+      "role": "persona",
+      "status": "explicit-only",
+      "mode": "session-style",
+      "authority": "presentation/comedy only",
+      "when": [
+        "user explicitly activates Mr. Meeseeks / April Fools mode"
+      ],
+      "avoid": [
+        "automatic invocation",
+        "serious task where persona was not requested"
+      ],
+      "auto_invoke": false
+    },
+    {
+      "id": "make-build-ledger",
+      "role": "legacy-ledger",
+      "status": "legacy",
+      "mode": "none",
+      "authority": "legacy/read-only unless migration authorized",
+      "when": [
+        "compatibility/migration work explicitly targets the legacy ledger skill"
+      ],
+      "avoid": [
+        "normal ledger work"
+      ],
+      "superseded_by": "dynamic-build-ledger"
+    },
+    {
+      "id": "goblin-chunk-compact",
+      "role": "continuity-fallback",
+      "status": "built-in",
+      "mode": "primary",
+      "authority": "closeout summary/checkpoint only",
+      "when": [
+        "meaningful chunk closeout or compaction boundary and no initialized authorized Dynamic Build Ledger path can use update-ledger-compact"
+      ],
+      "avoid": [
+        "initialized authorized DBL + update-ledger-compact are available"
+      ],
+      "rule": "Fallback continuity skill shipped by Goblin; never fake native compaction."
+    }
+  ],
+  "non_routable_artifacts": [
+    {
+      "name": "make-an-opencode-skill-kit",
+      "reason": "distribution/install kit containing make-an-opencode-skill; route to the canonical skill instead"
+    },
+    {
+      "name": "skill-tree",
+      "reason": "index/embedding support data, not a callable skill"
+    },
+    {
+      "name": "Builder#2 state/notes/test artifacts",
+      "reason": "builder evidence/reference material, not callable skills"
+    },
+    {
+      "name": "skillz.zip and duplicate top-level ZIPs",
+      "reason": "distribution bundles/duplicates, not runtime skill IDs"
+    }
+  ]
+}
