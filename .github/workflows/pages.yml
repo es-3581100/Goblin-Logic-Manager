@@ -1,0 +1,64 @@
+name: Deploy Dynamic Manual
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - README.md
+      - rendered-demo.html
+      - assets/**
+      - scripts/build-pages-site.py
+      - .github/workflows/pages.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Render README into dynamic manual
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 scripts/build-pages-site.py \
+            --repo "$GITHUB_REPOSITORY" \
+            --output-dir _site
+
+      - name: Validate generated site
+        run: |
+          test -s _site/index.html
+          test -s _site/rendered-demo.html
+          test -f _site/.nojekyll
+          test -s _site/provenance.json
+          grep -q 'goblin-readme-sha256' _site/index.html
+          grep -q '"authority": "README.md"' _site/provenance.json
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

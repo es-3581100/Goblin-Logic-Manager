@@ -5,6 +5,16 @@
   <img src="assets/goblin-logic-manager-banner.png" alt="Goblin-Logic-Manager illustrated banner" width="100%">
 </p>
 
+### 🧪 Dynamic Documentation
+
+**[Open the Goblin-Logic-Manager Dynamic Manual →](https://es-3581100.github.io/Goblin-Logic-Manager/)**
+
+`README.md` remains the portable GitHub-native documentation authority. The
+Dynamic Manual is regenerated from the current README by GitHub Actions and
+adds the Goblin visual shell, sticky navigation, responsive layout, copy
+controls, and build provenance.
+
+
 > **A small, model-expandable OpenCode development-agent system with a deliberately narrow trust boundary.**
 
 `Goblin-Logic-Manager` (GLM) separates **stable development behavior** from **model-specific prompt tuning**, renders the two into an OpenCode agent, and keeps installation auditable by reference instead of merging an unfamiliar automation stack into a user's existing configuration.
